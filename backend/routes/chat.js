@@ -4,7 +4,7 @@ import Groq from "groq-sdk";
 const router = express.Router();
 
 const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 router.post("/", async (req, res) => {
@@ -16,23 +16,25 @@ router.post("/", async (req, res) => {
       messages: [
         {
           role: "user",
-          content: message
-        }
-      ]
+          content: message,
+        },
+      ],
     });
 
     const reply = response.choices[0].message.content;
 
     res.json({
-      reply: reply
+      reply: reply,
     });
 
   } catch (error) {
+
     console.error("Chat error:", error);
 
     res.status(500).json({
-      error: "LLM failed"
+      error: "LLM failed",
     });
+
   }
 });
 

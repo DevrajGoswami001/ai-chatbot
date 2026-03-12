@@ -9,36 +9,39 @@ dotenv.config();
 const app = express();
 
 /*
-CORS configuration
-Allow requests from Vercel frontend
+Enable CORS so Vercel frontend can call the backend
 */
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
 
-app.use(
-  cors({
-    origin: "https://ai-chatbot-g2kl.vercel.app",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
-
+/*
+Parse JSON requests
+*/
 app.use(express.json());
 
+/*
+Connect to MongoDB
+*/
 connectDB();
 
 /*
-Routes
+Chat API route
 */
-
 app.use("/api/chat", chatRoutes);
 
 /*
-Test route
+Health check route
 */
-
 app.get("/", (req, res) => {
   res.send("Server running");
 });
 
+/*
+Start server
+*/
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
