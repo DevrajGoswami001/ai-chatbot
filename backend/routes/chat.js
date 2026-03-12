@@ -1,70 +1,38 @@
 import express from "express";
-import Chat from "../models/Chat.js";
-import { generateResponse } from "../../langchain/chatChain.js";
+import Groq from "groq-sdk";
 
 const router = express.Router();
 
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY
+});
+
 router.post("/", async (req, res) => {
   try {
+    const { message } = req.body;
 
-    const { userMessage } = req.body;
-
-    if (!userMessage) {
-      return res.status(400).json({
-        error: "User message is required"
-      });
-    }
-
-    // Get previous chats from MongoDB
-    const previousChats = await Chat.find()
-      .sort({ createdAt: 1 })
-      .limit(10);
-
-    // Convert them into message history
-    const history = [];
-
-    previousChats.forEach(chat => {
-      history.push({
-        role: "user",
-        content: chat.userMessage
-      });
-
-      history.push({
-        role: "assistant",
-        content: chat.aiResponse
-      });
+    const response = await groq.chat.completions.create({
+      model: "llama3-8b-8192",
+      messages: [
+        {
+          role: "user",
+          content: message
+        }
+      ]
     });
 
-    // Add current user message
-    history.push({
-      role: "user",
-      content: userMessage
-    });
-
-    // Generate AI response using history
-    const aiResponse = await generateResponse(history);
-
-    // Save new chat
-    const chat = new Chat({
-      userMessage,
-      aiResponse
-    });
-
-    await chat.save();
+    const reply = response.choices[0].message.content;
 
     res.json({
-      userMessage,
-      aiResponse
+      reply: reply
     });
 
   } catch (error) {
-
-    console.error("ERROR:", error);
+    console.error("Chat error:", error);
 
     res.status(500).json({
-      error: "Server error"
+      error: "LLM failed"
     });
-
   }
 });
 

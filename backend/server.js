@@ -1,21 +1,39 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
-
+import dotenv from "dotenv";
 import connectDB from "./db.js";
-import chatRoute from "./routes/chat.js";
+import chatRoutes from "./routes/chat.js";
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
+/*
+CORS configuration
+Allow requests from Vercel frontend
+*/
+
+app.use(
+  cors({
+    origin: "https://ai-chatbot-g2kl.vercel.app",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+
 app.use(express.json());
 
 connectDB();
 
-// Chat API
-app.use("/chat", chatRoute);
+/*
+Routes
+*/
+
+app.use("/api/chat", chatRoutes);
+
+/*
+Test route
+*/
 
 app.get("/", (req, res) => {
   res.send("Server running");

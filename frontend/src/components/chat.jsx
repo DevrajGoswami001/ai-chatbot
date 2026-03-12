@@ -6,35 +6,52 @@ function Chat() {
   const [messages, setMessages] = useState([]);
 
   const sendMessage = async () => {
+
     if (!message.trim()) return;
 
-    const userMessage = { role: "user", text: message };
+    const userMessage = {
+      role: "user",
+      text: message
+    };
+
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const res = await api.post("/", { message });
+
+      const res = await api.post("/", {
+        message: message
+      });
 
       const botMessage = {
         role: "bot",
-        text: res.data.reply,
+        text: res.data.reply
       };
 
       setMessages((prev) => [...prev, botMessage]);
+
     } catch (error) {
+
+      console.error(error);
+
       setMessages((prev) => [
         ...prev,
-        { role: "bot", text: "Error generating response." },
+        {
+          role: "bot",
+          text: "Error generating response."
+        }
       ]);
+
     }
 
     setMessage("");
+
   };
 
   return (
     <div style={{ padding: "20px" }}>
       <h2>AI Chat</h2>
 
-      <div style={{ minHeight: "200px", marginBottom: "20px" }}>
+      <div style={{ minHeight: "200px" }}>
         {messages.map((msg, index) => (
           <div key={index}>
             <b>{msg.role}:</b> {msg.text}
@@ -48,7 +65,10 @@ function Chat() {
         placeholder="Ask something..."
       />
 
-      <button onClick={sendMessage}>Send</button>
+      <button onClick={sendMessage}>
+        Send
+      </button>
+
     </div>
   );
 }
