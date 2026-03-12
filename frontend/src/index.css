@@ -1,0 +1,184 @@
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#111;
+  overflow:hidden;
+}
+
+/* Layout */
+
+.app-container{
+  display:flex;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* Sidebar */
+
+.sidebar{
+  width:240px;
+  background:#0b0b0b;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  border-right:1px solid #222;
+}
+
+.sidebar-header{
+  padding:20px;
+  font-size:20px;
+  font-weight:bold;
+  border-bottom:1px solid #222;
+}
+
+.chat-history{
+  padding:10px;
+}
+
+.chat-item{
+  padding:10px;
+  margin-bottom:5px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.chat-item:hover{
+  background:#1a1a1a;
+}
+
+/* Chat area */
+
+.chat-area{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  background:#000;
+  color:white;
+}
+
+/* Header */
+
+.chat-header{
+  text-align:center;
+  padding:15px;
+  border-bottom:1px solid #222;
+  font-size:18px;
+}
+
+/* Messages */
+
+.messages{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:20px;
+  overflow-y:auto;
+  max-width:900px;
+  width:100%;
+  margin:auto;
+}
+
+/* Custom Scrollbar */
+
+.messages::-webkit-scrollbar {
+  width:6px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background:transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background:#444;
+  border-radius:10px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+  background:#666;
+}
+
+.messages {
+  scrollbar-width: thin;
+  scrollbar-color: #444 transparent;
+}
+
+/* Message bubbles */
+
+.message{
+  max-width:60%;
+  padding:12px 16px;
+  border-radius:10px;
+  word-wrap:break-word;
+}
+
+.message.user{
+  background:#3b82f6;
+  align-self:flex-end;
+}
+
+.message.bot{
+  background:#2c2c2c;
+  align-self:flex-start;
+}
+
+/* Input wrapper */
+
+.input-wrapper{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+
+/* Input area */
+
+.input-area{
+  width:60%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 16px;
+  background:#1f1f1f;
+  border-radius:40px;
+  border:1px solid #2f2f2f;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+
+/* Input */
+
+.input-area input{
+  flex:1;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:white;
+  font-size:15px;
+}
+
+/* Buttons */
+
+.icon-btn{
+  background:none;
+  border:none;
+  color:#aaa;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.send-btn{
+  background:#3b82f6;
+  border:none;
+  color:white;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.welcome-text{
+  text-align:center;
+  margin-top:120px;
+  font-size:22px;
+  color:#aaa;
+}

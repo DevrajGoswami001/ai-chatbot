@@ -1,0 +1,18 @@
+import Groq from "groq-sdk";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY
+});
+
+export async function generateResponse(messages) {
+
+  const completion = await groq.chat.completions.create({
+    messages: messages,
+    model: "llama-3.3-70b-versatile"
+  });
+
+  return completion.choices[0].message.content;
+}
