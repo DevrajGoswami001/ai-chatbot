@@ -1,9 +1,12 @@
-import Chat from "./components/Chat";
+import React from "react";
+import Chat from "./chat";
 
-export default function App() {
+function App() {
   return (
     <div>
       <Chat />
     </div>
   );
 }
+
+export default App;
